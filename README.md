@@ -1,5 +1,7 @@
 This is my new project
 
-some line to test
-some changes to rebase
-test line
+Another thing here
+
+Install all required dependencies
+
+one more change
