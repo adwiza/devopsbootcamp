@@ -50,7 +50,7 @@ resource "aws_route_table_association" "a-rtb-subnet" {
 }
 
 resource "aws_default_security_group" "default-sg" {
-  name   = "myapp-sg"
+  #name   = "default-sg"
   vpc_id = aws_vpc.myapp-vpc.id
 
   ingress {
@@ -101,7 +101,7 @@ resource "aws_instance" "myapp-server" {
     ami = data.aws_ami.latest-amazon-linux-image.id
     instance_type = var.instance_type
 
-    subnet_id = aws_subnet.myapp-subnet-1
+    subnet_id = aws_subnet.myapp-subnet-1.id
     vpc_security_group_ids = [aws_default_security_group.default-sg.id]
     availability_zone = var.avail_zone
 
