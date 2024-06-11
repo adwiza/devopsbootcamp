@@ -98,6 +98,10 @@ output "aws_ami_id" {
   value = data.aws_ami.latest-amazon-linux-image.id
 }
 
+output "es2_public_ip" {
+  value = aws_instance.myapp-server.public_ip
+}
+
 resource "aws_key_pair" "ssh-key" {
   key_name = "server-key"
   public_key = file(var.my_public_key_location)
