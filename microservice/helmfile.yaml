@@ -1,0 +1,27 @@
+releases:
+  - name: oneservice
+    chart: ./charts/app
+    values:
+      - ./values/oneservice
+  - name: twoservice
+    chart: ./charts/app
+    values:
+      - ./values/twoservice
+      - appReplicas: "2"
+    # atomic: false
+    # cleanupOnFail: false
+    # kubeContext: 
+    # createNamespace: true
+    # devel: false
+    # disableValidation: false
+    # disableValidationOnInstall: false
+    # disableOpenAPIValidation: false
+    # historyMax: 10
+    # skipDeps: false
+    # cascade: background
+    # insecureSkipTLSVerify: false
+    # timeout: 300
+    # recreatePods: false
+    # force: false
+    # wait: false
+    # waitForJobs: false
