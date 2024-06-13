@@ -8,7 +8,8 @@ variable avail_zone {}
 variable env_prefix {}
 variable my_ip {}
 variable instance_type {}
-variable my_public_key_location {}
+variable public_key_location {}
+variable private_key_location {}
 
 resource "aws_vpc" "myapp-vpc" {
   cidr_block = var.vpc_cidr_block
@@ -104,7 +105,7 @@ output "es2_public_ip" {
 
 resource "aws_key_pair" "ssh-key" {
   key_name = "server-key"
-  public_key = file(var.my_public_key_location)
+  public_key = file(var.public_key_location)
 }
 
 resource "aws_instance" "myapp-server" {
@@ -118,7 +119,33 @@ resource "aws_instance" "myapp-server" {
     associate_public_ip_address = true
     key_name = aws_key_pair.ssh-key.key_name
 
-    user_data = file("entry-script.sh")
+    #  user_data = file("entry-script.sh")
+
+    connection {
+      type = "ssh"
+      host = self.public_ip
+      user = "ec2-user"
+      private_key = file(var.private_key_location)
+    }
+
+    provisioner "file" {
+      source = "entry-script.sh"
+      destination = "/home/ec2-user/entry-script.sh"
+    }
+
+    provisioner "remote-exec" {
+      # inline = [ 
+      #   "export ENV=dev",
+      #   "mkdir newdir"
+      #  ]
+      script = file("entry-script.sh")
+      
+    }
+
+    provisioner "local-exec" {
+      command = "echo ${self.public_ip} > output.txt"
+      
+    }
                 
     tags = {
         Name : "${var.env_prefix}-server"
