@@ -3,13 +3,12 @@ provider "aws" {
 }
 
 variable vpc_cidr_block {}
-variable subnet_cidr_block {}
+variable subnet_block {}
 variable avail_zone {}
 variable env_prefix {}
 variable my_ip {}
 variable instance_type {}
-variable public_key_location {}
-variable private_key_location {}
+variable my_public_key_location {}
 
 resource "aws_vpc" "myapp-vpc" {
   cidr_block = var.vpc_cidr_block
@@ -20,7 +19,7 @@ resource "aws_vpc" "myapp-vpc" {
 
 resource "aws_subnet" "myapp-subnet-1" {
   vpc_id            = aws_vpc.myapp-vpc.id
-  cidr_block        = var.subnet_cidr_block
+  cidr_block        = var.subnet_block
   availability_zone = var.avail_zone
   tags = {
     Name : "${var.env_prefix}-subnet-1"
@@ -105,7 +104,7 @@ output "es2_public_ip" {
 
 resource "aws_key_pair" "ssh-key" {
   key_name = "server-key"
-  public_key = file(var.public_key_location)
+  public_key = file(var.my_public_key_location)
 }
 
 resource "aws_instance" "myapp-server" {
