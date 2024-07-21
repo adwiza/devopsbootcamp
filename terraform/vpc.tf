@@ -1,6 +1,6 @@
 
 provider "aws" {
-  region = "eu-west-2"
+  region = "us-east-1"
 }
 
 variable "vpc_cidr_block" {}
@@ -11,7 +11,7 @@ data "aws_availability_zones" "azs" {}
 
 module "myapp-vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "5.8.1"
+  version = "5.9.0"
 
   name            = "myapp-vpc"
   cidr            = var.vpc_cidr_block
@@ -31,13 +31,11 @@ module "myapp-vpc" {
   public_subnet_tags = {
     "kubernetes.io/cluster/myapp-eks-cluster" = "shared"
     "kubernetes.io/role/elb"                  = 1
-    use_name_prefix = false
   }
 
   private_subnet_tags = {
     "kubernetes.io/cluster/myapp-eks-cluster" = "shared"
     "kubernetes.io/role/internal-elb"         = 1
-    use_name_prefix = false
   }
 
 }
