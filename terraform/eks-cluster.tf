@@ -1,8 +1,9 @@
 terraform {
-  required_version = "~> v1.8.5"
+  required_version = ">= v1.8.5"
   backend "s3" {
     bucket = "myapp-bucket"
     key = "myapp/state.tfstate"
+    region = "eu-west-3"
   }
 }
 provider "kubernetes" {
