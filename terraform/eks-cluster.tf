@@ -1,11 +1,11 @@
-terraform {
-  required_version = ">= v1.8.5"
-  backend "s3" {
-    bucket = "myapp-bucket"
-    key = "myapp/state.tfstate"
-    region = "eu-west-3"
-  }
-}
+# terraform {
+#   required_version = ">= v1.8.5"
+#   backend "s3" {
+#     bucket = "devopsbootcamp-tfstate-bucket"
+#     key = "myapp/state.tfstate"
+#     region = "eu-west-3"
+#   }
+# }
 provider "kubernetes" {
   host  = data.aws_eks_cluster.myapp-cluster.endpoint
   token = data.aws_eks_cluster_auth.myapp-cluster.token
