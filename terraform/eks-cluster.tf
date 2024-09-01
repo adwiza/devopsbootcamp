@@ -34,6 +34,22 @@ module "eks" {
   cluster_name    = "myapp-eks-cluster"
   cluster_version = "1.30"
 
+  # access_entries = {
+  #   # One access entry with a policy associated
+  #   operators = {
+  #     principal_arn = tolist(data.terraform_remote_state.sso.outputs.aws_admin_policy_arn)[0]
+
+  #     policy_associations = {
+  #       operators = {
+  #         policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+  #         access_scope = {
+  #           type = "cluster"
+  #         }
+  #       }
+  #     }
+  #   }
+  # }
+
   subnet_ids = module.myapp-vpc.private_subnets
   vpc_id     = module.myapp-vpc.vpc_id
 
