@@ -1,0 +1,26 @@
+---
+- name: Install node and npm
+  hosts: 192.168.3.231
+  tasks: 
+  - name: update apt repo and cache
+    apt: 
+      update_cache: yes
+      force_apt_get: yes
+      cache_valid_time: 3600
+  - name: Install nodejs and npm
+    apt: 
+      pkg:
+        - nodejs
+        - npm    
+- name: Deploy nodejs app
+  hosts: 192.168.3.231
+  tasks: 
+  # - name: Copy nodejs folder to a server
+  #   copy:
+  #     src:  /Users/adwiz/Downloads/bootcamp-node-envvars-project-1.0.0.tgz
+  #     dest: /root/app-1.0.0.tgz
+  - name: Unpack the nodejs file
+    unarchive: 
+      src: /root/app-1.0.0.tgz
+      dest: /root/
+      remote_src: yes
