@@ -1,0 +1,4 @@
+location: /home/admin
+version: 1.0.0
+user_home_directory: /home/admin
+linux_name: admin
