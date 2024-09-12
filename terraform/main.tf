@@ -9,6 +9,9 @@ variable env_prefix {}
 variable my_ip {}
 variable instance_type {}
 variable my_public_key_location {}
+variable "ssh_key_private" {
+  default = "~/.ssh/id_ed25519"
+  }
 
 resource "aws_vpc" "myapp-vpc" {
   cidr_block = var.vpc_cidr_block
@@ -122,5 +125,10 @@ resource "aws_instance" "myapp-server" {
                 
     tags = {
         Name : "${var.env_prefix}-server"
+  }
+
+  provisioner "local_exec" {
+    working_dir = "/Users/adwiz/Documents/Courses/git/devopsbootcamp/ansible"
+    command = "ansible-playbook --inventory ${self.public_ip}, --private-key ${var.ssh_key_private} --user=root deploy-docker-new-user.yaml"
   }
 }
